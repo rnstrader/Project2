@@ -5,3 +5,10 @@ editor: visual
 ---
 
 
+## Preparation for App
+reading in Seoul Bike sharing data for the year-long period from December 2017 through November 2018. Locale argument was included to allow data to read in properly, as the formatting for date seemed to be giving it trouble.
+```{r}
+library(tidyverse)
+bike <- read_csv("SeoulBikeData.csv", locale=locale(encoding="latin1"))
+bike
+```
