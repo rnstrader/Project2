@@ -43,5 +43,9 @@ bike |> ggplot(aes(x = `Snowfall (cm)`, y = `Rented Bike Count`, colour = Season
 #boxplot of bike count vs holiday or non-holiday days
 bike |> ggplot(aes(x = Holiday, y = `Rented Bike Count`)) + geom_boxplot() + theme_minimal() + labs(title = "Bike Count on Holiday vs Standard Days") + xlab("Day Type") 
 
+#bar graph of total number of bikes rented by hour, broken down by season
 bike |> ggplot(aes(x = Hour, y = `Rented Bike Count`, fill = Seasons)) + geom_col() + theme_minimal() + labs(title = "Hourly Bike Count by Season")
+
+#bar graph of average hourly temperature faceted by season
+bike |> group_by(Hour, Seasons) |> summarize(avg_temp = mean(`Temperature(°C)`, )) |> ggplot(aes(x = Hour, y = avg_temp)) + geom_col(width = 0.8) + theme_minimal() + labs(title = "Average Hourly Temperature by Season") + ylab("Average Temperature (°C)") + facet_wrap(~ Seasons, scales = "fixed")
 ```
