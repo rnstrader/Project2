@@ -12,12 +12,27 @@ library(tidyverse)
 bike <- read_csv("SeoulBikeData.csv", locale=locale(encoding="latin1"))
 ```
 
-One-way and Two-way contingency tables.
+One-way and Two-way contingency tables. Due to the nature of bike count being a numeric variable with many possible values, I instead created a range of values for ease of viewing the table.
 ```{r}
 holiday <- bike |> group_by(Holiday) |> summarize(count = n())
 holiday
 
-hourly <- bike |> group_by(Hour, `Rented Bike Count`) |> summarize(count = n())
+hourly <- bike |>
+  mutate(
+    count_range = case_when(
+      `Rented Bike Count` < 200 ~ "0–199",
+      `Rented Bike Count` < 400 ~ "200–399",
+      `Rented Bike Count` < 600 ~ "400–599",
+      `Rented Bike Count` < 800 ~ "600-799",
+      `Rented Bike Count` < 1000 ~ "800-999",
+      `Rented Bike Count` < 1200 ~ "1000-1199", 
+      TRUE ~ "1200+"
+    )
+  ) |>
+  group_by(Hour, count_range) |>
+  summarize(count = n(), .groups = "drop") |>
+  arrange(Hour, count_range)
+
 hourly
 ```
 
