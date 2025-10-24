@@ -14,9 +14,11 @@ bike <- read_csv("SeoulBikeData.csv", locale=locale(encoding="latin1"))
 
 One-way and Two-way contingency tables.
 ```{r}
+# number of holidays vs standard days across the year
 holiday <- bike |> group_by(Holiday) |> summarize(count = n())
 holiday
 
+# days in which the system was functioning or not functioning by season
 functioning <- bike |> group_by(`Functioning Day`, Seasons) |> summarize(count = n())
 functioning
 ```
@@ -27,7 +29,10 @@ summary <- bike |> group_by(Seasons) |> summarise(across(`Rented Bike Count`, .f
 summary
 ```
 
-Six plots for investigating the data
+Six plots for investigating the data. two scatterplots, 4 multivariate
 ```{r}
+#scatter plot for bike count vs rainfall faceted by season
+bike |> ggplot(aes(x = `Rainfall(mm)`, y = `Rented Bike Count`)) + geom_point(size = 0.5, alpha = 0.6) + facet_wrap(vars(Seasons)) + theme_minimal() + labs(title = "Bike Count vs Rainfall by Season")
 
+bike |> ggplot(aes(x = `Temperature(°C)`, y = `Rented Bike Count`, colour = Holiday)) + geom_point(size = 0.3) + theme_minimal() + labs(title = "Bike count vs Temperature by Holiday")
 ```
