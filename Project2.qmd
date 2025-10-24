@@ -26,3 +26,8 @@ Numerical summaries for bike usage by season.
 summary <- bike |> group_by(Seasons) |> summarise(across(`Rented Bike Count`, .fns = list("mean" = mean, "median" = median, "var" = var, "sd" = sd), .names = "{.fn}_{.col}"))
 summary
 ```
+
+Six plots for investigating the data
+```{r}
+
+```
