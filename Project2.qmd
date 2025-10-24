@@ -39,4 +39,9 @@ bike |> ggplot(aes(x = `Temperature(°C)`, y = `Rented Bike Count`, colour = Hol
 
 #heat map 2d plot for bike count vs snowfall colored by season
 bike |> ggplot(aes(x = `Snowfall (cm)`, y = `Rented Bike Count`, colour = Seasons)) + geom_bin2d() + theme_minimal() + labs(title = "Bike Count vs Snowfall by Season")
+
+#boxplot of bike count vs holiday or non-holiday days
+bike |> ggplot(aes(x = Holiday, y = `Rented Bike Count`)) + geom_boxplot() + theme_minimal() + labs(title = "Bike Count on Holiday vs Standard Days") + xlab("Day Type") 
+
+bike |> ggplot(aes(x = Hour, y = `Rented Bike Count`, fill = Seasons)) + geom_col() + theme_minimal() + labs(title = "Hourly Bike Count by Season")
 ```
