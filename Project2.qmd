@@ -34,5 +34,9 @@ Six plots for investigating the data. two scatterplots, 4 multivariate
 #scatter plot for bike count vs rainfall faceted by season
 bike |> ggplot(aes(x = `Rainfall(mm)`, y = `Rented Bike Count`)) + geom_point(size = 0.5, alpha = 0.6) + facet_wrap(vars(Seasons)) + theme_minimal() + labs(title = "Bike Count vs Rainfall by Season")
 
+#scatter plot for bike count vs temperature colored by holiday
 bike |> ggplot(aes(x = `Temperature(°C)`, y = `Rented Bike Count`, colour = Holiday)) + geom_point(size = 0.3) + theme_minimal() + labs(title = "Bike count vs Temperature by Holiday")
+
+#heat map 2d plot for bike count vs snowfall colored by season
+bike |> ggplot(aes(x = `Snowfall (cm)`, y = `Rented Bike Count`, colour = Seasons)) + geom_bin2d() + theme_minimal() + labs(title = "Bike Count vs Snowfall by Season")
 ```
