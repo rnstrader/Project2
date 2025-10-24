@@ -12,16 +12,17 @@ library(tidyverse)
 bike <- read_csv("SeoulBikeData.csv", locale=locale(encoding="latin1"))
 ```
 
-One-way and Two-way contingency tables. Due to the nature of bike count being a numeric variable with many possible values, I instead created a range of values for ease of viewing the table.
+One-way and Two-way contingency tables.
 ```{r}
 holiday <- bike |> group_by(Holiday) |> summarize(count = n())
 holiday
 
-functioning <- bike |> group_by(`Functioning Day`, Holiday) |> summarize(count = n())
+functioning <- bike |> group_by(`Functioning Day`, Seasons) |> summarize(count = n())
 functioning
 ```
 
-Numerical summaries for 
+Numerical summaries for bike usage by season.
 ```{r}
-
+summary <- bike |> group_by(Seasons) |> summarise(across(`Rented Bike Count`, .fns = list("mean" = mean, "median" = median, "var" = var, "sd" = sd), .names = "{.fn}_{.col}"))
+summary
 ```
