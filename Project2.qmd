@@ -10,5 +10,18 @@ reading in Seoul Bike sharing data for the year-long period from December 2017 t
 ```{r}
 library(tidyverse)
 bike <- read_csv("SeoulBikeData.csv", locale=locale(encoding="latin1"))
-bike
+```
+
+One-way and Two-way contingency tables.
+```{r}
+holiday <- bike |> group_by(Holiday) |> summarize(count = n())
+holiday
+
+hourly <- bike |> group_by(Hour, `Rented Bike Count`) |> summarize(count = n())
+hourly
+```
+
+Numerical summaries for 
+```{r}
+
 ```
