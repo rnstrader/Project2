@@ -126,8 +126,7 @@ server <- function(input, output, session) {
     subsetted_data <- my_sample |>
       filter(#cat vars first
         Seas_fac %in% Seas_sub,
-        FSfac %in% hol_sub,
-        SCHLfac %in% schl_sub
+        Hol_fac %in% hol_sub,
       ) %>% #make sure numeric variables are in appropriate range, must use %>% here for {} to work
       {if("WKHP" %in% corr_vars) filter(., WKHP > 0) else .} %>%
       {if("VALP" %in% corr_vars) filter(., !is.na(VALP)) else .} %>%
