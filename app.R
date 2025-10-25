@@ -13,36 +13,34 @@ ui <- fluidPage(
   #Sidebar with options for the data set
   sidebarLayout(
     sidebarPanel(
-      h2("Select Variables to Find Correlation:"),
+      h2("Select Variables:"),
       
       #X variable selector
-      selectizeInput("corr_x", "x Variable", selected = numeric_vars[1], choices = numeric_vars, multiple = FALSE),
+    #  selectizeInput("corr_x", "x Variable", selected = numeric_vars[1], choices = numeric_vars, multiple = FALSE),
       
       #Y variable selector
-      selectizeInput("corr_y", "y Variable", selected = numeric_vars[2], choices = numeric_vars, multiple = FALSE),
+     # selectizeInput("corr_y", "y Variable", selected = numeric_vars[2], choices = numeric_vars, multiple = FALSE),
       
       
       br(),
       
-      #Household Language Buttons
-      radioButtons("hhl_corr", "Household Language", choiceNames = c("All", "English only", "Spanish", "Other"), choiceValues = c("all", "english", "spanish", "other")), 
+      #Seasons Buttons
+      radioButtons("seas", "Seasons", choiceNames = c("All", "Winter", "Autumn", "Spring", "Summer"), choiceValues = c("all", "Winter", "Autumn", "Spring", "Summer")), 
       
-      #Food Stamps Buttons
+      #Holidays Buttons
       radioButtons("fs_corr", "SNAP Recipient", choiceNames = c("All", "Yes", "No"), choiceValues = c("all", "yes", "no")), 
-      
-      #Education Buttons
-      radioButtons("schl_corr", "Educational Attainment", choiceNames = c("All", "High School not Completed", "High School or GED", "College Degree"), choiceValues = c("all", "no_hs", "hs", "coll")),
+
       
       #Sample Size Slider
       h2("Select a Sample Size"),
       sliderInput("corr_n", label = NULL, min = 20, max = 500, value = 20),
-      actionButton("corr_sample","Get a Sample!")
+      actionButton("bike_sample","Get a Sample!")
     ),
     
     #Code for Main Panel with plot and correlation guessing activity
     mainPanel(
       plotOutput("corr_plot"),
-      conditionalPanel("input.corr_sample > 0",
+      conditionalPanel("input.bike_sample > 0",
                        h2("Guess the correlation!"),
                        column(6, 
                               numericInput("corr_guess",
@@ -99,17 +97,19 @@ server <- function(input, output, session) {
   sample_corr <- reactiveValues(corr_data = NULL, corr_truth = NULL)
   
   
-  #Code to look for the action button (corr_sample)
+  #Code to look for the action button (bike_sample)
   
-  observeEvent(input$corr_sample, {
-    if(input$hhl_corr == "all"){
-      hhl_sub <- HHLvals
-    } else if(input$hhl_corr == "english"){
-      hhl_sub <- HHLvals["1"]
-    } else if(input$hhl_corr == "spanish"){
-      hhl_sub <- HHLvals["2"]
-    } else {
-      hhl_sub <- HHLvals[c("0", "3", "4", "5")]
+  observeEvent(input$bike_sample, {
+    if(input$seas == "all"){
+      hhl_sub <- SeasVals
+    } else if(input$seas == "Winter"){
+      hhl_sub <- SeasVals["1"]
+    } else if(input$seas == "Autumn"){
+      hhl_sub <- SeasVals["2"]
+    } else if(input$seas == "Spring"){
+      hhl_sub <- SeasVals["3"]
+    } else if(input$seas == "Summer"){
+      hhl_sub <- SeasVals["4"]
     }
     
     if(input$fs_corr == "all"){
