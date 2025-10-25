@@ -37,24 +37,9 @@ ui <- fluidPage(
     #Code for Main Panel with plot and correlation guessing activity
     mainPanel(
       plotOutput("corr_plot"),
-      conditionalPanel("input.bike_sample > 0",
-                       h2("Guess the correlation!"),
-                       column(6, 
-                              numericInput("corr_guess",
-                                           "",
-                                           value = 0,
-                                           min = -1, 
-                                           max = 1
-                              )
-                       ),
-                       column(6, 
-                              actionButton("corr_submit", "Check Your Guess!"))
-      )
-    )
-  )
-)
+),
 
-my_sample <- readRDS("my_sample_temp.rds")
+my_sample <- readRDS("my_sample_temp.rds"),
 
 # Define server logic required to draw a histogram
 server <- function(input, output, session) {
