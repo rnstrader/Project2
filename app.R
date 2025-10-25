@@ -42,6 +42,8 @@ ui <- fluidPage(
       actionButton("apply_filters", "Apply Filters", class = "btn-primary")
     ),
     
+  #LEFT OFF HERE  
+  
     #Code for Main Panel with plot and correlation guessing activity
     mainPanel(
       plotOutput("corr_plot"),
