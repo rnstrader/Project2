@@ -13,17 +13,14 @@ ui <- fluidPage(
   #Sidebar with options for the data set
   sidebarLayout(
     sidebarPanel(
-      h2("Select Variables:"),
+      h2("Select Numeric Variables:"),
       
-      #X variable selector
-    #  selectizeInput("corr_x", "x Variable", selected = numeric_vars[1], choices = numeric_vars, multiple = FALSE),
-      
-      #Y variable selector
-     # selectizeInput("corr_y", "y Variable", selected = numeric_vars[2], choices = numeric_vars, multiple = FALSE),
-      
+      #Numeric Variable Selector
+      selectInput("num_var", "Numerical Variable:", choices = c("Rented Bike Count", "Temperature(°C)"), selected = "Rented Bike Count"),
       
       br(),
       
+      #Categorical Variable Subsets
       #Seasons Buttons
       radioButtons("seas", "Seasons", choiceNames = c("All", "Winter", "Autumn", "Spring", "Summer"), choiceValues = c("all", "Winter", "Autumn", "Spring", "Summer")), 
       
