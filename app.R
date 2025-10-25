@@ -38,11 +38,8 @@ ui <- fluidPage(
       #Holidays Buttons
       radioButtons("hol", "Holiday", choiceNames = c("All", "Holiday", "Not Holiday"), choiceValues = c("all", "Holiday", "No Holiday")), 
 
-      
-      #Sample Size Slider
-      h2("Select a Sample Size"),
-      sliderInput("corr_n", label = NULL, min = 20, max = 500, value = 20),
-      actionButton("bike_sample","Get a Sample!")
+      #Apply Button
+      actionButton("apply_filters", "Apply Filters", class = "btn-primary")
     ),
     
     #Code for Main Panel with plot and correlation guessing activity
