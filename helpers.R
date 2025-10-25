@@ -12,4 +12,11 @@ SeasVals <- c( #"Seasons",
   "1" = "Winter",
   "2" = "Autumn",
   "3" = "Spring",
-  "4" = "Summer")
+  "4" = "Summer"
+)
+
+#Holiday Values
+HolVals <- c(
+  "1" = "Holiday",
+  "2" = "No Holiday"
+)      

@@ -28,7 +28,7 @@ ui <- fluidPage(
       radioButtons("seas", "Seasons", choiceNames = c("All", "Winter", "Autumn", "Spring", "Summer"), choiceValues = c("all", "Winter", "Autumn", "Spring", "Summer")), 
       
       #Holidays Buttons
-      radioButtons("fs_corr", "SNAP Recipient", choiceNames = c("All", "Yes", "No"), choiceValues = c("all", "yes", "no")), 
+      radioButtons("hol", "Holiday", choiceNames = c("All", "Holiday", "Not Holiday"), choiceValues = c("all", "Holiday", "No Holiday")), 
 
       
       #Sample Size Slider
@@ -101,15 +101,15 @@ server <- function(input, output, session) {
   
   observeEvent(input$bike_sample, {
     if(input$seas == "all"){
-      hhl_sub <- SeasVals
+      Seas_sub <- SeasVals
     } else if(input$seas == "Winter"){
-      hhl_sub <- SeasVals["1"]
+      Seas_sub <- SeasVals["1"]
     } else if(input$seas == "Autumn"){
-      hhl_sub <- SeasVals["2"]
+      Seas_sub <- SeasVals["2"]
     } else if(input$seas == "Spring"){
-      hhl_sub <- SeasVals["3"]
+      Seas_sub <- SeasVals["3"]
     } else if(input$seas == "Summer"){
-      hhl_sub <- SeasVals["4"]
+      Seas_sub <- SeasVals["4"]
     }
     
     if(input$fs_corr == "all"){
@@ -120,23 +120,12 @@ server <- function(input, output, session) {
       fs_sub <- FSvals["2"]
     }
     
-    if(input$schl_corr == "all"){
-      schl_sub <- SCHLvals
-    } else if(input$schl_corr == "no_hs"){
-      schl_sub <- SCHLvals[c("0", "01", "02", "03", "04",
-                             "05", "06", "07", "08", "09",
-                             "10", "11", "12", "13", "14", "15")]
-    } else if(input$schl_corr == "hs"){
-      schl_sub <- SCHLvals[as.character(16:19)]
-    } else {
-      schl_sub <- SCHLvals[as.character(20:24)]
-    }
     
     corr_vars <- c(input$corr_x, input$corr_y)
     
     subsetted_data <- my_sample |>
       filter(#cat vars first
-        HHLfac %in% hhl_sub,
+        Seas_fac %in% Seas_sub,
         FSfac %in% fs_sub,
         SCHLfac %in% schl_sub
       ) %>% #make sure numeric variables are in appropriate range, must use %>% here for {} to work
