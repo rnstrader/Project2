@@ -15,8 +15,19 @@ ui <- fluidPage(
     sidebarPanel(
       h2("Select Numeric Variables:"),
       
-      #Numeric Variable Selector
-      selectInput("num_var", "Numerical Variable:", choices = c("Rented Bike Count", "Temperature(°C)"), selected = "Rented Bike Count"),
+      #1st Numeric Variable Selector
+      selectInput("num_var1", "Numerical Variable 1:", choices = numeric_vars, selected = "Rented Bike Count"),
+      
+      uiOutput("num_filter1"),
+      
+      tags$hr(),
+      
+      #2nd Numeric Variable Selector
+      selectInput("num_var2", "Numerical Variable 2:", choices = numeric_vars, selected = "Temperature(°C)"),
+      
+      uiOutput("num_filter2"),
+      
+      tags$hr(),
       
       br(),
       
