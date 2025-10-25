@@ -60,33 +60,21 @@ my_sample <- readRDS("my_sample_temp.rds")
 server <- function(input, output, session) {
   
   
-  ##Correlation tab
-  #This code makes sure the select boxes update so they can't select the same variable in both!
-  #Preventing the input for x and y variable being identical
-  observeEvent(input$corr_x, {
-    corr_x <- input$corr_x
-    corr_y <- input$corr_y
-    choices <- numeric_vars
-    if (corr_x != corr_y){
-      choices <- choices[-which(choices == corr_x)]
-      updateSelectizeInput(session,
-                           "corr_y",
-                           choices = choices,
-                           selected = ifelse(corr_y %in% choices, corr_y, choices[1]))
-    }
-  })
   
-  observeEvent(input$corr_y, {
-    corr_x <- input$corr_x
-    corr_y <- input$corr_y
-    choices <- numeric_vars
-    if (corr_x != corr_y){
-      choices <- choices[-which(choices == corr_y)]
-      updateSelectizeInput(session,
-                           "corr_x",
-                           choices = choices,
-                           selected = ifelse(corr_x %in% choices, corr_x, choices[1]))
-    }
+  #This code makes sure that numerical and categorical subsets of the data respect choices made
+  observeEvent(input$apply_filters, {
+    filtered_data$df <- bike |>
+      filter(
+        # Handle seasons filter
+        if (input$seas == "all") TRUE else Seasons == input$seas,
+        
+        # Handle holiday filter
+        if (input$hol == "all") TRUE else Holiday == input$hol,
+        
+        # Handle numeric filters
+        between(.data[[input$num_var1]], input$num_range1[1], input$num_range1[2]),
+        between(.data[[input$num_var2]], input$num_range2[1], input$num_range2[2])
+      )
   })
   
   
@@ -94,47 +82,9 @@ server <- function(input, output, session) {
   sample_corr <- reactiveValues(corr_data = NULL, corr_truth = NULL)
   
   
-  #Code to look for the action button (bike_sample)
-  
-  observeEvent(input$bike_sample, {
-    if(input$seas == "all"){
-      Seas_sub <- SeasVals
-    } else if(input$seas == "Winter"){
-      Seas_sub <- SeasVals["1"]
-    } else if(input$seas == "Autumn"){
-      Seas_sub <- SeasVals["2"]
-    } else if(input$seas == "Spring"){
-      Seas_sub <- SeasVals["3"]
-    } else if(input$seas == "Summer"){
-      Seas_sub <- SeasVals["4"]
-    }
-    
-    if(input$hol == "all"){
-      hol_sub <- HolVals
-    } else if(input$hol == "Holiday"){
-      hol_sub <- HolVals["1"]
-    } else {
-      hol_sub <- HolVals["2"]
-    }
-    
-    
     corr_vars <- c(input$corr_x, input$corr_y)
     
-    subsetted_data <- my_sample |>
-      filter(#cat vars first
-        Seas_fac %in% Seas_sub,
-        Hol_fac %in% hol_sub,
-      ) %>% #make sure numeric variables are in appropriate range, must use %>% here for {} to work
-      {if("WKHP" %in% corr_vars) filter(., WKHP > 0) else .} %>%
-      {if("VALP" %in% corr_vars) filter(., !is.na(VALP)) else .} %>%
-      {if("TAXAMT" %in% corr_vars) filter(., !is.na(TAXAMT)) else .} %>%
-      {if("GRPIP" %in% corr_vars) filter(., GRPIP > 0) else .} %>%
-      {if("GASP" %in% corr_vars) filter(., GASP > 0) else .} %>%
-      {if("ELEP" %in% corr_vars) filter(., ELEP > 0) else .} %>%
-      {if("WATP" %in% corr_vars) filter(., WATP > 0) else .} %>%
-      {if("PINCP" %in% corr_vars) filter(., AGEP > 18) else .} %>%
-      {if("JWMNP" %in% corr_vars) filter(., !is.na(JWMNP)) else .}
-    
+  
     index <- sample(1:nrow(subsetted_data),
                     size = input$corr_n,
                     replace = TRUE,
