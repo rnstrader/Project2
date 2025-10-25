@@ -78,7 +78,7 @@ server <- function(input, output, session) {
     #updating the sample_corr reactive value object
     sample_corr$corr_data <- subsetted_data[index, ]
     sample_corr$corr_truth <- cor(sample_corr$corr_data |> select(corr_vars))[1,2]
-  })
+  }),
   
   
   #Create a renderPlot() object to output a scatter plot
@@ -90,7 +90,7 @@ server <- function(input, output, session) {
     #code for plot
     ggplot(sample_corr$corr_data, aes_string(x = isolate(input$corr_x), y = isolate(input$corr_y))) +
       geom_point()
-  })
+  }),
   
   #This code does the correlation guessing game!
   observeEvent(input$corr_submit, {
@@ -112,9 +112,7 @@ server <- function(input, output, session) {
       }
     }
   })
-  
-  
-}
+)
 
 # Run the application 
 shinyApp(ui = ui, server = server)
