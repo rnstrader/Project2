@@ -112,12 +112,12 @@ server <- function(input, output, session) {
       Seas_sub <- SeasVals["4"]
     }
     
-    if(input$fs_corr == "all"){
-      fs_sub <- FSvals
-    } else if(input$fs_corr == "yes"){
-      fs_sub <- FSvals["1"]
+    if(input$hol == "all"){
+      hol_sub <- HolVals
+    } else if(input$hol == "Holiday"){
+      hol_sub <- HolVals["1"]
     } else {
-      fs_sub <- FSvals["2"]
+      hol_sub <- HolVals["2"]
     }
     
     
@@ -126,7 +126,7 @@ server <- function(input, output, session) {
     subsetted_data <- my_sample |>
       filter(#cat vars first
         Seas_fac %in% Seas_sub,
-        FSfac %in% fs_sub,
+        FSfac %in% hol_sub,
         SCHLfac %in% schl_sub
       ) %>% #make sure numeric variables are in appropriate range, must use %>% here for {} to work
       {if("WKHP" %in% corr_vars) filter(., WKHP > 0) else .} %>%
