@@ -8,7 +8,7 @@ source("helpers.R")
 ui <- fluidPage(
   
   #Title Panel
-  titlePanel("Correlation Exploration"),
+  titlePanel("Bike Sharing Exploration"),
   
   #Sidebar with options for the data set
   sidebarLayout(
