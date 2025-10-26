@@ -72,6 +72,27 @@ server <- function(input, output, session) {
       )
   })
   
+  output$num_filter1 <- renderUI({
+    req(input$num_var1)
+    var_data <- bike[[input$num_var1]]
+    sliderInput("num_range1",
+                label = paste("Subset", input$num_var1),
+                min = floor(min(var_data, na.rm = TRUE)),
+                max = ceiling(max(var_data, na.rm = TRUE)),
+                value = c(floor(min(var_data, na.rm = TRUE)),
+                          ceiling(max(var_data, na.rm = TRUE))))
+  })
+  
+  output$num_filter2 <- renderUI({
+    req(input$num_var2)
+    var_data <- bike[[input$num_var2]]
+    sliderInput("num_range2",
+                label = paste("Subset", input$num_var2),
+                min = floor(min(var_data, na.rm = TRUE)),
+                max = ceiling(max(var_data, na.rm = TRUE)),
+                value = c(floor(min(var_data, na.rm = TRUE)),
+                          ceiling(max(var_data, na.rm = TRUE))))
+  })
   
   #creating sample_corr, a reactiveValues object that has two elements that default to null
   sample_corr <- reactiveValues(corr_data = NULL, corr_truth = NULL)
