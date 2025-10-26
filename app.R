@@ -42,14 +42,12 @@ ui <- fluidPage(
       actionButton("apply_filters", "Apply Filters", class = "btn-primary")
     ),
     
-  #LEFT OFF HERE  
-  
     #Code for Main Panel with plot and correlation guessing activity
     mainPanel(
       plotOutput("corr_plot"),
-),
-
-my_sample <- readRDS("my_sample_temp.rds"),
+    )
+  )
+)
 
 # Define server logic required to draw a histogram
 server <- function(input, output, session) {
@@ -80,7 +78,7 @@ server <- function(input, output, session) {
   #creating a reactiveValues object stores filtered data
   filtered_data <- reactiveValues(df = bike)
   
-  #This code makes sure that numerical and categorical subsets of the data respect choices made
+  #Update the dataset when Apply Filters is clicked
   observeEvent(input$apply_filters, {
     filtered_data$df <- bike |>
       filter(
@@ -95,8 +93,8 @@ server <- function(input, output, session) {
         between(.data[[input$num_var2]], input$num_range2[1], input$num_range2[2])
       )
   })
+}
 
-)
 
 # Run the application 
 shinyApp(ui = ui, server = server)
