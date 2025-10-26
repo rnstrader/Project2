@@ -66,8 +66,16 @@ ui <- fluidPage(
                  
                  img(src = "bikes.jpg", height = "250px", alt = "Bike Sharing Image")
                  ),
+        
+        #Data Download Tab
+        tabPanel("Data Download",
+                 h4("View and Download Filtered Data"),
+                 p("Below is your filtered dataset. Download it using the button below."),
+                 DT::dataTableOutput("filtered_table"),
+                 br(),
+                 downloadButton("download_data", "Download Filtered Data", class = "btn-success")
+                 )
       )
-      
     )
   )
 )
