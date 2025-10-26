@@ -95,38 +95,7 @@ server <- function(input, output, session) {
         between(.data[[input$num_var2]], input$num_range2[1], input$num_range2[2])
       )
   })
-  
-  #Create a renderPlot() object to output a scatter plot
-  output$corr_plot <- renderPlot({
-    #The code below validates that data exists
-    validate(
-      need(!is.null(sample_corr$corr_data), "Please select your variables, subset, and click the 'Get a Sample!' button.")
-    )
-    #code for plot
-    ggplot(sample_corr$corr_data, aes_string(x = isolate(input$corr_x), y = isolate(input$corr_y))) +
-      geom_point()
-  }),
-  
-  #This code does the correlation guessing game!
-  observeEvent(input$corr_submit, {
-    close <- abs(input$corr_guess - sample_corr$corr_truth) <= .05
-    if(close){
-      shinyalert(title = "Nicely done!",
-                 paste0("The sample correlation is ", 
-                        round(sample_corr$corr_truth, 4), 
-                        "."),
-                 type = "success"
-      )
-    } else {
-      if(input$corr_guess > sample_corr$corr_truth){
-        shinyalert(title = "Try again!",
-                   "Try guessing a lower value.")
-      } else {
-        shinyalert(title = "Try again!",
-                   "Try guessing a higher value.")
-      }
-    }
-  })
+
 )
 
 # Run the application 
