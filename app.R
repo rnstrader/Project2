@@ -74,7 +74,10 @@ ui <- fluidPage(
                  DT::dataTableOutput("filtered_table"),
                  br(),
                  downloadButton("download_data", "Download Filtered Data", class = "btn-success")
-                 )
+                 ),
+        
+        #Data Exploration Tab
+        
       )
     )
   )
