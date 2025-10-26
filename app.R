@@ -50,8 +50,20 @@ ui <- fluidPage(
         tabPanel("About", 
                  h3("About This App"),
                  p("This app allows the user to explore data collected on bike sharing dataset. Subsetting the data from options on the sidebar allow the user to examine patterns based on weather phenomena, seasonal differences, and holidays."),
+                 
                  h4("About the Data"),
-                 p("The dataset used here contains hourly bike rental information with weather and calendar information for the city of Seoul, South Korea."))
+                 p("The dataset used here contains hourly bike rental information with weather and calendar information for the city of Seoul, South Korea."),
+                 
+                 tags$a(href = "https://archive.ics.uci.edu/ml/datasets/Seoul+Bike+Sharing+Demand",
+                        "Click here for more information on the dataset.", target = "_blank"),
+                 
+                 h4("Using the App"),
+                 tags$ul(
+                   tags$li("Use the sidebar to subset data by season, holiday, or numeric variables."),
+                   tags$li("The Data Download tab allows the user to view the entire dataset or to subset it based on choices described previously. The data can also be saved as a file."),
+                   tags$li("")
+                 )
+                 ),
       )
       
     )
