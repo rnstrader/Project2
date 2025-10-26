@@ -54,24 +54,7 @@ my_sample <- readRDS("my_sample_temp.rds"),
 # Define server logic required to draw a histogram
 server <- function(input, output, session) {
   
-  
-  
-  #This code makes sure that numerical and categorical subsets of the data respect choices made
-  observeEvent(input$apply_filters, {
-    filtered_data$df <- bike |>
-      filter(
-        # Handle seasons filter
-        if (input$seas == "all") TRUE else Seasons == input$seas,
-        
-        # Handle holiday filter
-        if (input$hol == "all") TRUE else Holiday == input$hol,
-        
-        # Handle numeric filters
-        between(.data[[input$num_var1]], input$num_range1[1], input$num_range1[2]),
-        between(.data[[input$num_var2]], input$num_range2[1], input$num_range2[2])
-      )
-  })
-  
+  #Dynamic Sliders for numeric variables
   output$num_filter1 <- renderUI({
     req(input$num_var1)
     var_data <- bike[[input$num_var1]]
@@ -94,23 +77,24 @@ server <- function(input, output, session) {
                           ceiling(max(var_data, na.rm = TRUE))))
   })
   
-  #creating sample_corr, a reactiveValues object that has two elements that default to null
-  sample_corr <- reactiveValues(corr_data = NULL, corr_truth = NULL)
+  #creating a reactiveValues object stores filtered data
+  filtered_data <- reactiveValues(df = bike)
   
-  
-    corr_vars <- c(input$corr_x, input$corr_y)
-    
-  
-    index <- sample(1:nrow(subsetted_data),
-                    size = input$corr_n,
-                    replace = TRUE,
-                    prob = subsetted_data$PWGTP/sum(subsetted_data$PWGTP))
-    
-    #updating the sample_corr reactive value object
-    sample_corr$corr_data <- subsetted_data[index, ]
-    sample_corr$corr_truth <- cor(sample_corr$corr_data |> select(corr_vars))[1,2]
-  }),
-  
+  #This code makes sure that numerical and categorical subsets of the data respect choices made
+  observeEvent(input$apply_filters, {
+    filtered_data$df <- bike |>
+      filter(
+        # Handle seasons filter
+        if (input$seas == "all") TRUE else Seasons == input$seas,
+        
+        # Handle holiday filter
+        if (input$hol == "all") TRUE else Holiday == input$hol,
+        
+        # Handle numeric filters
+        between(.data[[input$num_var1]], input$num_range1[1], input$num_range1[2]),
+        between(.data[[input$num_var2]], input$num_range2[1], input$num_range2[2])
+      )
+  })
   
   #Create a renderPlot() object to output a scatter plot
   output$corr_plot <- renderPlot({
