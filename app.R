@@ -62,7 +62,9 @@ ui <- fluidPage(
                    tags$li("Use the sidebar to subset data by season, holiday, or numeric variables."),
                    tags$li("The Data Download tab allows the user to view the entire dataset or to subset it based on choices described previously. The data can also be saved as a file."),
                    tags$li("The Data Exploration tab allows the user to obtain numerical and graphical summaries of the data.")
-                 )
+                 ),
+                 
+                 img(src = "bikes.jpg", height = "250px", alt = "Bike Sharing Image")
                  ),
       )
       
