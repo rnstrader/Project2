@@ -87,7 +87,7 @@ ui <- fluidPage(
                    condition = "input.sumary_type == 'Categorical Summaries'",
                    h4("Categorical Summaries"),
                    selectInput("cat_var1", "Categorical Variable 1:",
-                               choices = c("Seasons", "Holiday", "Functioning Day"), selected = "Seasons"),
+                               choices = categorical_vars, selected = "Seasons"),
                    selectInput("cat_var2", "Categorical Variable 2 (optional):",
                                choices = c("None", "Seasons", "Holiday", "Functioning Day"), selected = "None"),
                    withSpinner(plotOutput("cat_plot")),
@@ -99,7 +99,9 @@ ui <- fluidPage(
                    h4("Numeric Summaries"),
                    selectInput("num_summary", "Numeric Variable:",
                                choices = numeric_vars, selected = "Rented Bike Count"),
-                   selectInput()
+                   selectInput("cat_group", "Group By (categorical variable):",
+                               choices = c("None", "Seasons", "Holiday", "Functioning Day"), selected = "Seasons"),
+                   
                  )
                  )
       )
