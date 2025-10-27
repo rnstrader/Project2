@@ -154,6 +154,17 @@ server <- function(input, output, session) {
         between(.data[[input$num_var2]], input$num_range2[1], input$num_range2[2])
       )
   })
+  
+  #Data Table & Download
+  output$filtered_table <- DT::renderDataTable({
+    filtered_data$df
+  })
+  
+  output$download_data <- downloadHandler(
+    filename = function() paste0("filtered_bike_data_", Sys.Date(), ".csv"),
+    content = function(file) write_csv(filtered_data$df, file)
+  )
+  
 }
 
 
