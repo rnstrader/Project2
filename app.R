@@ -1,6 +1,8 @@
 library(shiny)
 library(shinyalert)
 library(tidyverse)
+library(DT)
+library(shinycssloaders)
 
 source("helpers.R")
 
@@ -42,7 +44,7 @@ ui <- fluidPage(
       actionButton("apply_filters", "Apply Filters", class = "btn-primary")
     ),
     
-    #Code for Main Panel with tabs and plots
+    #Code for Main Panel with tabs
     mainPanel(
       tabsetPanel(
         
@@ -77,7 +79,23 @@ ui <- fluidPage(
                  ),
         
         #Data Exploration Tab
-        
+        tabPanel("Data Exploration",
+                 
+                 radioButtons("summary_type", "Choose Summary Type:", choices = c("Categorical Summaries", "Numeric Summaries"), inline = TRUE),
+                 
+                 conditionalPanel(
+                   condition = "input.sumary_type == 'Categorical Summaries'",
+                   h4("Categorical Summaries"),
+                   selectInput("cat_var1", "Categorical Variable 1:",
+                               choices = c("Seasons", "Holiday", "Functioning Day"), selected = "Seasons"),
+                   selectInput("cat_var2", "Categorical Variable 2 (optional):",
+                               choices = c("None", "Seasons", "Holiday", "Functioning Day"), selected = "None"),
+                   withSpinner(plotOutput("cat_plot")),
+                   withSpinner(plotOutput("cat_table"))
+                 ),
+                 
+                 
+                 )
       )
     )
   )
