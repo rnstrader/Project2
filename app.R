@@ -165,6 +165,21 @@ server <- function(input, output, session) {
     content = function(file) write_csv(filtered_data$df, file)
   )
   
+  #Categorical Summaries
+  output$cat_table <- renderTable({
+    req(filtered_data$df)
+    validate(need(input$cat_var1 %in% names(filtered_data$df),
+                  "Select a valid categorical variable."))
+    
+    df <- filtered_data$df
+    if(input$cat_var2 == "None") {
+      as.data.frame(table(df[[input$cat_var1]]))
+    } else {
+      as.data.frame(table(df[[input$cat_var1]], df[[input$cat_var2]]))
+    }
+  })
+  
+  #Left off here
 }
 
 
