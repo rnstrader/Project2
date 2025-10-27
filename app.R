@@ -101,9 +101,10 @@ ui <- fluidPage(
                                choices = numeric_vars, selected = "Rented Bike Count"),
                    selectInput("cat_group", "Group By (categorical variable):",
                                choices = c("None", "Seasons", "Holiday", "Functioning Day"), selected = "Seasons"),
-                   
+                   withSpinner(plotOutput("num_plot")),
+                   withSpinner(plotOutput("num_table"))
                  )
-                 )
+        )
       )
     )
   )
