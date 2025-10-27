@@ -94,7 +94,13 @@ ui <- fluidPage(
                    withSpinner(plotOutput("cat_table"))
                  ),
                  
-                 
+                 conditionalPanel(
+                   condition = "input.summary_type == 'Numeric Summaries'",
+                   h4("Numeric Summaries"),
+                   selectInput("num_summary", "Numeric Variable:",
+                               choices = numeric_vars, selected = "Rented Bike Count"),
+                   selectInput()
+                 )
                  )
       )
     )
