@@ -187,7 +187,9 @@ server <- function(input, output, session) {
                   "Please select categorical variables for plotting"))
     
     if(input$cat_var2 == "None") {
-      ggplot(df, aes(x = .data[[input$cat_var1]])) + geom_bar() + theme_minimal()
+      ggplot(df, aes(x = .data[[input$cat_var1]])) + geom_bar() + theme_minimal() + labs(title = paste("Count of", input$cat_var1), x = input$cat_var1, y = "Count")
+    } else {
+      ggplot(df, aes(x = .data[[input$cat_var1]], fill = .data[[input$cat_var2]])) + geom_bar(position = "dodge") + theme_minimal() + labs(title = paste("Counts of", input$cat_var1, "by", input$cat_var2), x = input$cat_var1, y = "Count")
     }
   })
 }
