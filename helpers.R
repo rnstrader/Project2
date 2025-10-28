@@ -5,9 +5,8 @@ bike <- read_csv("SeoulBikeData.csv", locale=locale(encoding="latin1"))
 
 bike <- bike |> mutate(across(where(is.character), as.factor))
 
-#sorting categorical and numeric vectors
+#sorting numeric variables
 numeric_vars <- names(bike)[sapply(bike, is.numeric)]
-categorical_vars <- names(bike)[sapply(bike, is.factor)]
 
 #Season Values
 SeasVals <- c(

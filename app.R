@@ -89,7 +89,7 @@ ui <- fluidPage(
                    condition = "input.summary_type == 'Categorical Summaries'",
                    h4("Categorical Summaries"),
                    selectInput("cat_var1", "Categorical Variable 1:",
-                               choices = categorical_vars, selected = "Seasons"),
+                               choices = c("Seasons", "Holiday", "Functioning Day"), selected = "Seasons"),
                    selectInput("cat_var2", "Categorical Variable 2 (optional):",
                                choices = c("None", "Seasons", "Holiday", "Functioning Day"), selected = "None"),
                    selectInput("cat_group", "Group By (optional):",
