@@ -238,7 +238,9 @@ server <- function(input, output, session) {
       tibble(
         Variable = num_vars,
         Mean = sapply(df[num_vars], \(x) mean(x)),
-        SD
+        SD = sapply(df[num_vars], \(x) sd(x)),
+        Min = sapply(df[num_vars], \(x) min(x)),
+        Max = sapply(df[num_vars], \(x) max(x))
       )
     }
   })
