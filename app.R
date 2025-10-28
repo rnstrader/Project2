@@ -251,13 +251,13 @@ server <- function(input, output, session) {
     xvar <- input$num_var1
     yvar <- input$num_var2
     
-    #Scatterplot if both Numeric
+    #Scatterplot if not grouped
     if(input$num_group == "None") {
       ggplot(df, aes(x = .data[[xvar]], y = .data[[yvar]])) + 
         geom_point() + theme_minimal() + 
         labs(title = paste("Relationship between", xvar, "and", yvar), x = xvar, y = yvar)
     } 
-    #Boxplot if grouped
+    #Colored Scatterplot if grouped
     else {
       ggplot(df, aes(x = .data[[xvar]], y = .data[[yvar]], fill = .data[[input$num_group]])) + 
         geom_boxplot() + theme_minimal() + 
