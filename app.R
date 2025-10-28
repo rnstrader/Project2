@@ -259,8 +259,8 @@ server <- function(input, output, session) {
     } 
     #Colored Scatterplot if grouped
     else {
-      ggplot(df, aes(x = .data[[xvar]], y = .data[[yvar]], fill = .data[[input$num_group]])) + 
-        geom_boxplot() + theme_minimal() + 
+      ggplot(df, aes(x = .data[[xvar]], y = .data[[yvar]], colour = .data[[input$num_group]])) + 
+        geom_point() + theme_minimal() + 
         labs(title = paste(yvar, "by", input$num_group),
              x = input$num_group, y = yvar)
     }
