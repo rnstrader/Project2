@@ -84,6 +84,7 @@ ui <- fluidPage(
                  
                  radioButtons("summary_type", "Choose Summary Type:", choices = c("Categorical Summaries", "Numeric Summaries"), selected = "Numeric Summaries"),
                  
+                 #Categorical Variable Inputs
                  conditionalPanel(
                    condition = "input.summary_type == 'Categorical Summaries'",
                    h4("Categorical Summaries"),
@@ -97,6 +98,7 @@ ui <- fluidPage(
                    withSpinner(tableOutput("cat_table"))
                  ),
                  
+                 #Numerical Variable Inputs
                  conditionalPanel(
                    condition = "input.summary_type == 'Numeric Summaries'",
                    h4("Numeric Summaries"),
