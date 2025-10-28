@@ -218,11 +218,12 @@ server <- function(input, output, session) {
     validate(need(var %in% names(df), "Please select a numeric variable"))
     
     if(input$cat_group == "None") {
-      ggplot(df, aes(x = .data[[var]])) 
+      ggplot(df, aes(x = .data[[var]])) + geom_histogram() + theme_minimal() + labs(title = paste("Distribution of", var), x = var, y = "Frequency")
+    } else {
+      ggplot(df, aes(x = .data[[input$cat_group]], y = .data[[var]], fill = .data[[input$cat_group]])) + geom_boxplot() + theme_minimal() + labs(title = paste(var, "across", input$cat_group), x = input$cat_group, y = var)
     }
   })
 }
-
 
 # Run the application 
 shinyApp(ui = ui, server = server)
