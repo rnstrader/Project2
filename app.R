@@ -158,8 +158,12 @@ server <- function(input, output, session) {
   })
   
   output$download_data <- downloadHandler(
-    filename = function() paste0("filtered_bike_data_", Sys.Date(), ".csv"),
-    content = function(file) write_csv(filtered_data$df, file)
+    filename = function() {
+      paste0("filtered_bike_data_", Sys.Date(), ".csv")
+    },
+    content = function(file) {
+      write_csv(filtered_data$df, file)
+    }
   )
   
   #Categorical Summaries
