@@ -192,7 +192,15 @@ server <- function(input, output, session) {
     #One or Two way Bar charts
     if(input$cat_var2 == "None") {
       p <- ggplot(df, aes(x = .data[[input$cat_var1]]))
-      if(input$cat_group != )
+      if(input$cat_group != "None") {
+        p <- p + geom_bar(aes(fill = .data[[input$cat_group]]), position = "dodge")
+      } else {
+        p <- p + geom_bar()
+      }
+      
+      p + theme_minimal() + labs(title = paste("Counts of", input$cat_var1), x = input$cat_var1, y = "Count")
+    } else {
+      
     }
   })
   
