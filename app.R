@@ -219,18 +219,28 @@ server <- function(input, output, session) {
   output$num_table <- renderTable({
     req(filtered_data$df)
     df <- filtered_data$df
+    num_vars <- c(input$num_var1, input$num_var2)
     
-    tibble(
-      Variable = c(input$num_var1, input$num_var2),
-      Mean = c(mean(df[[input$num_var1]]),
-               mean(df[[input$num_var2]])),
-      SD = c(sd(df[[input$num_var1]]),
-             sd(df[[input$num_var2]])),
-      Min = c(min(df[[input$num_var1]]),
-              min(df[[input$num_var2]])),
-      Max = c(max(df[[input$num_var1]]),
-              max(df[[input$num_var2]]))
-    )
+    #Including Grouped summaries if variable selected
+    if(input$num_group != "None") {
+      df |> 
+        group_by(.data[[input$num_group]]) |>
+        summarize(across(all_of(num_vars), 
+                         list(
+                           Mean= ~mean(.x),
+                           SD = ~sd(.x),
+                           Min = ~min(.x),
+                           Max = ~max(.x)
+                         ),
+                         .names = "{.col}_{.fn}")
+                  )
+    } else {
+      tibble(
+        Variable = num_vars,
+        Mean = sapply(df[num_vars], \(x) mean(x)),
+        SD
+      )
+    }
   })
   
   output$num_plot <- renderPlot({
