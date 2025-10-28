@@ -91,6 +91,8 @@ ui <- fluidPage(
                                choices = categorical_vars, selected = "Seasons"),
                    selectInput("cat_var2", "Categorical Variable 2 (optional):",
                                choices = c("None", "Seasons", "Holiday", "Functioning Day"), selected = "None"),
+                   selectInput("cat_group", "Group By (optional):",
+                               choices = c("None", "Seasons", "Holiday", "Functioning Day"), selected = "None"),
                    withSpinner(plotOutput("cat_plot")),
                    withSpinner(tableOutput("cat_table"))
                  ),
@@ -185,7 +187,13 @@ server <- function(input, output, session) {
   
   output$cat_plot <- renderPlot({
     req(filtered_data$df, input$cat_var1)
-    ggplot(filtered_data$df, aes(x = .data[[input$cat_var1]])) + geom_bar() + theme_minimal() + labs(title = paste("Counts of", input$cat_var1), x = input$cat_var1, y = "Count")
+    df <- filtered_data$df
+    
+    #One or Two way Bar charts
+    if(input$cat_var2 == "None") {
+      p <- ggplot(df, aes(x = .data[[input$cat_var1]]))
+      if(input$cat_group != )
+    }
   })
   
   #Numeric Summaries 
