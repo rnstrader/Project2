@@ -80,6 +80,7 @@ ui <- fluidPage(
         
         #Data Exploration Tab
         tabPanel("Data Exploration",
+                 h3("Explore Numeric and Categorical Summaries"),
                  
                  radioButtons("summary_type", "Choose Summary Type:", choices = c("Categorical Summaries", "Numeric Summaries"), inline = TRUE),
                  
