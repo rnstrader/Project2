@@ -51,7 +51,7 @@ ui <- fluidPage(
         #About Tab
         tabPanel("About", 
                  h3("About This App"),
-                 p("This app allows the user to explore data collected on bike sharing dataset. Subsetting the data from options on the sidebar allow the user to examine patterns based on weather phenomena, seasonal differences, and holidays."),
+                 p("This app allows the user to explore data collected on a bike sharing dataset. Subsetting the data from options on the sidebar allow the user to examine patterns based on weather phenomena, seasonal differences, and holidays."),
                  
                  h4("About the Data"),
                  p("The dataset used here contains hourly bike rental information with weather and calendar information for the city of Seoul, South Korea."),
