@@ -194,7 +194,23 @@ server <- function(input, output, session) {
   })
   
   #Numeric Summaries 
+  output$num_table <- renderTable({
+    req(filtered_data$df)
+    df <- filtered_data$df
+    var <- input$num_summary
+    
+    validate(need(var %in% names(df), "Please select a numeric variable"))
+    
+    if(input$cat_group == "None") {
+      summary(df[[var]])
+    } else {
+      df |> 
+        group_by(.data[[input$cat_group]]) |>
+        summarize(Mean = mean(.data[[var]]), Median = median(.data[[var]]), SD = sd(.data[[var]]), Min = min(.data[[var]]), Max = max(.data[[var]]))
+    }
+  })
   
+  output$num_plot 
 }
 
 
