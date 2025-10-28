@@ -210,7 +210,17 @@ server <- function(input, output, session) {
     }
   })
   
-  output$num_plot 
+  output$num_plot <- renderPlot({
+    req(filtered_data$df)
+    df <- filtered_data$df
+    var <- input$num_summary
+    
+    validate(need(var %in% names(df), "Please select a numeric variable"))
+    
+    if(input$cat_group == "None") {
+      ggplot(df, aes(x = .data[[var]])) 
+    }
+  })
 }
 
 
