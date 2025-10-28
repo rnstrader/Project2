@@ -198,17 +198,18 @@ server <- function(input, output, session) {
   output$num_table <- renderTable({
     req(filtered_data$df)
     df <- filtered_data$df
-    var <- input$num_summary
     
-    validate(need(var %in% names(df), "Please select a numeric variable"))
-    
-    if(input$cat_group == "None") {
-      summary(df[[var]])
-    } else {
-      df |> 
-        group_by(.data[[input$cat_group]]) |>
-        summarize(Mean = mean(.data[[var]]), Median = median(.data[[var]]), SD = sd(.data[[var]]), Min = min(.data[[var]]), Max = max(.data[[var]]))
-    }
+    tibble(
+      Variable = c(input$num_var1, input$num_var2),
+      Mean = c(mean(df[[input$num_var1]]),
+               mean(df[[input$num_var2]])),
+      SD = c(sd(df[[input$num_var1]]),
+             sd(df[[input$num_var2]])),
+      Min = c(min(df[[input$num_var1]]),
+              min(df[[input$num_var2]])),
+      Max = c(max(df[[input$num_var1]]),
+              max(df[[input$num_var2]]))
+    )
   })
   
   output$num_plot <- renderPlot({
