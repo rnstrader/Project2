@@ -259,7 +259,7 @@ server <- function(input, output, session) {
     } 
     #Boxplot if grouped
     else {
-      ggplot(df, aes(x = .data[[input$num_group]], y = .data[[yvar]], fill = .data[[input$num_group]])) + 
+      ggplot(df, aes(x = .data[[input$xvar]], y = .data[[yvar]], fill = .data[[input$num_group]])) + 
         geom_boxplot() + theme_minimal() + 
         labs(title = paste(yvar, "by", input$num_group),
              x = input$num_group, y = yvar)
