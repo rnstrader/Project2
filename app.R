@@ -92,14 +92,14 @@ ui <- fluidPage(
                    selectInput("cat_var2", "Categorical Variable 2 (optional):",
                                choices = c("None", "Seasons", "Holiday", "Functioning Day"), selected = "None"),
                    withSpinner(plotOutput("cat_plot")),
-                   withSpinner(plotOutput("cat_table"))
+                   withSpinner(tableOutput("cat_table"))
                  ),
                  
                  conditionalPanel(
                    condition = "input.summary_type == 'Numeric Summaries'",
                    h4("Numeric Summaries"),
                    withSpinner(plotOutput("num_plot")),
-                   withSpinner(plotOutput("num_table"))
+                   withSpinner(tableOutput("num_table"))
                  )
         )
       )
