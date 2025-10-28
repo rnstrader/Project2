@@ -248,7 +248,22 @@ server <- function(input, output, session) {
   output$num_plot <- renderPlot({
     req(filtered_data$df)
     df <- filtered_data$df
-    ggplot(df, aes(x = .data[[input$num_var1]], y = .data[[input$num_var2]])) + geom_point() + theme_minimal() + labs(title = paste("Scatterplot of", input$num_var1, "vs", input$num_var2), x = input$num_var1, y = input$num_var2)
+    xvar <- input$num_var1
+    yvar <- input$num_var2
+    
+    #Scatterplot if both Numeric
+    if(input$num_group == "None") {
+      ggplot(df, aes(x = .data[[xvar]], y = .data[[yvar]])) + 
+        geom_point() + theme_minimal() + 
+        labs(title = paste("Relationship between", xvar, "and", yvar), x = xvar, y = yvar)
+    } 
+    #Boxplot if grouped
+    else {
+      ggplot(df, aes(x = .data[[input$num_group]], y = .data[[yvar]], fill = .data[[input$num_group]])) + 
+        geom_boxplot() + theme_minimal() + 
+        labs(title = paste(yvar, "by", input$num_group),
+             x = input$num_group, y = yvar)
+    }
   })
 }
 
