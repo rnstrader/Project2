@@ -102,6 +102,8 @@ ui <- fluidPage(
                  conditionalPanel(
                    condition = "input.summary_type == 'Numeric Summaries'",
                    h4("Numeric Summaries"),
+                   selectInput("num_group", "Group By (optional):",
+                               choices = c("None", "Seasons", "Holiday", "Functioning Day"), selected = "None"),
                    withSpinner(plotOutput("num_plot")),
                    withSpinner(tableOutput("num_table"))
                  )
