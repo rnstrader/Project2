@@ -179,7 +179,17 @@ server <- function(input, output, session) {
     }
   })
   
-  #Left off here
+  output$cat_plot <- renderPlot({
+    req(filtered_data$df)
+    df <- filtered_data$df
+    
+    validate(need(input$cat_var1 %in% names(df),
+                  "Please select categorical variables for plotting"))
+    
+    if(input$cat_var2 == "None") {
+      ggplot(df, aes(x = .data[[input$cat_var1]])) + geom_bar() + theme_minimal()
+    }
+  })
 }
 
 
