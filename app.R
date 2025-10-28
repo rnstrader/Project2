@@ -170,8 +170,17 @@ server <- function(input, output, session) {
   output$cat_table <- renderTable({
     req(filtered_data$df, input$cat_var1)
     df <- filtered_data$df
-    table(df[[input$cat_var1]]) |> as.data.frame() |>
-      rename(Category = Var1, Count = Freq)
+    
+    #One way vs Two way contingency tables
+    if(input$cat_var2 == "None") {
+      tbl <- table(df[[input$cat_var1]])
+      as.data.frame(tbl) |> 
+        rename(Category = Var1, Count = Freq)
+    } else {
+      tbl <- table(df[[input$cat_var1]], df[[input$cat_var2]])
+      as.data.frame(tbl) |> 
+        rename(!!input$cat_var1 := Var1, !!input$cat_var2 := Var2, Count = Freq)
+    }
   })
   
   output$cat_plot <- renderPlot({
