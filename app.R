@@ -82,7 +82,7 @@ ui <- fluidPage(
         tabPanel("Data Exploration",
                  h3("Explore Numeric and Categorical Summaries"),
                  
-                 radioButtons("summary_type", "Choose Summary Type:", choices = c("Categorical Summaries", "Numeric Summaries"), inline = TRUE),
+                 radioButtons("summary_type", "Choose Summary Type:", choices = c("Categorical Summaries", "Numeric Summaries"), selected = "Numeric Summaries"),
                  
                  conditionalPanel(
                    condition = "input.sumary_type == 'Categorical Summaries'",
@@ -98,10 +98,6 @@ ui <- fluidPage(
                  conditionalPanel(
                    condition = "input.summary_type == 'Numeric Summaries'",
                    h4("Numeric Summaries"),
-                   selectInput("num_summary", "Numeric Variable:",
-                               choices = numeric_vars, selected = "Rented Bike Count"),
-                   selectInput("cat_group", "Group By (categorical variable):",
-                               choices = c("None", "Seasons", "Holiday", "Functioning Day"), selected = "Seasons"),
                    withSpinner(plotOutput("num_plot")),
                    withSpinner(plotOutput("num_table"))
                  )
