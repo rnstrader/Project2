@@ -168,30 +168,15 @@ server <- function(input, output, session) {
   
   #Categorical Summaries
   output$cat_table <- renderTable({
-    req(filtered_data$df)
-    validate(need(input$cat_var1 %in% names(filtered_data$df),
-                  "Select a valid categorical variable."))
-    
+    req(filtered_data$df, input$cat_var)
     df <- filtered_data$df
-    if(input$cat_var2 == "None") {
-      as.data.frame(table(df[[input$cat_var1]]))
-    } else {
-      as.data.frame(table(df[[input$cat_var1]], df[[input$cat_var2]]))
-    }
+    table(df[[input$cat_var]]) |> as.data.frame() |>
+      rename(Category = Var1, Count = Freq)
   })
   
   output$cat_plot <- renderPlot({
-    req(filtered_data$df)
-    df <- filtered_data$df
-    
-    validate(need(input$cat_var1 %in% names(df),
-                  "Please select categorical variables for plotting"))
-    
-    if(input$cat_var2 == "None") {
-      ggplot(df, aes(x = .data[[input$cat_var1]])) + geom_bar() + theme_minimal() + labs(title = paste("Count of", input$cat_var1), x = input$cat_var1, y = "Count")
-    } else {
-      ggplot(df, aes(x = .data[[input$cat_var1]], fill = .data[[input$cat_var2]])) + geom_bar(position = "dodge") + theme_minimal() + labs(title = paste("Counts of", input$cat_var1, "by", input$cat_var2), x = input$cat_var1, y = "Count", fill = input$cat_var2)
-    }
+    req(filtered_data$df, input$cat_var)
+    ggplot(filtered_data$df, aes(x = .data[[input$cat_var]])) + geom_bar() + theme_minimal() + labs(title = paste("Counts of", input$cat_var), x = input$cat_var, y = "Count")
   })
   
   #Numeric Summaries 
