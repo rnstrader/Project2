@@ -168,15 +168,15 @@ server <- function(input, output, session) {
   
   #Categorical Summaries
   output$cat_table <- renderTable({
-    req(filtered_data$df, input$cat_var)
+    req(filtered_data$df, input$cat_var1)
     df <- filtered_data$df
-    table(df[[input$cat_var]]) |> as.data.frame() |>
+    table(df[[input$cat_var1]]) |> as.data.frame() |>
       rename(Category = Var1, Count = Freq)
   })
   
   output$cat_plot <- renderPlot({
-    req(filtered_data$df, input$cat_var)
-    ggplot(filtered_data$df, aes(x = .data[[input$cat_var]])) + geom_bar() + theme_minimal() + labs(title = paste("Counts of", input$cat_var), x = input$cat_var, y = "Count")
+    req(filtered_data$df, input$cat_var1)
+    ggplot(filtered_data$df, aes(x = .data[[input$cat_var1]])) + geom_bar() + theme_minimal() + labs(title = paste("Counts of", input$cat_var1), x = input$cat_var1, y = "Count")
   })
   
   #Numeric Summaries 
