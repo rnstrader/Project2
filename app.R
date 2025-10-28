@@ -200,15 +200,7 @@ server <- function(input, output, session) {
   output$num_plot <- renderPlot({
     req(filtered_data$df)
     df <- filtered_data$df
-    var <- input$num_summary
-    
-    validate(need(var %in% names(df), "Please select a numeric variable"))
-    
-    if(input$cat_group == "None") {
-      ggplot(df, aes(x = .data[[var]])) + geom_histogram() + theme_minimal() + labs(title = paste("Distribution of", var), x = var, y = "Frequency")
-    } else {
-      ggplot(df, aes(x = .data[[input$cat_group]], y = .data[[var]], fill = .data[[input$cat_group]])) + geom_boxplot() + theme_minimal() + labs(title = paste(var, "across", input$cat_group), x = input$cat_group, y = var)
-    }
+    ggplot(df, aes(x = .data[[input$num_var1]], y = .data[[input$num_var2]])) + geom_point() + theme_minimal() + labs(title = paste("Scatterplot of", input$num_var1, "vs", input$num_var2), x = input$num_var1, y = input$num_var2)
   })
 }
 
