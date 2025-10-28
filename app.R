@@ -200,7 +200,14 @@ server <- function(input, output, session) {
       
       p + theme_minimal() + labs(title = paste("Counts of", input$cat_var1), x = input$cat_var1, y = "Count")
     } else {
+      p <- ggplot(df, aes(x = .data[[input$cat_var1]], fill = .data[[input$cat_var2]])) + geom_bar(position = "dodge") + 
+        theme_minimal() + labs(title = paste("Counts of", input$cat_var1, "by", input$cat_var2),
+                               x = input$cat_var1, y = "Count")
+      if(input$cat_group != "None") {
+        p <- p + facet_wrap(~.data[[input$cat_group]])
+      }
       
+      p
     }
   })
   
