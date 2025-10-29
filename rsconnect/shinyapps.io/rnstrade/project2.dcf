@@ -1,0 +1,10 @@
+name: project2
+title:
+username: rnstrade
+account: rnstrade
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 15908718
+bundleId: 11103621
+url: https://rnstrade.shinyapps.io/project2/
+version: 1
